@@ -3,15 +3,15 @@
 
 
 %% Read in geotiff files from Global Solar Atlas
-[GHI,R] = geotiffread('GHI.tif');
-[TEMP_file,R_temp] = geotiffread('TEMP.tif');
+%[GHI,R] = geotiffread('GHI.tif');
+%[TEMP_file,R_temp] = geotiffread('TEMP.tif');
 %%
 
-[ghi_data, map] = imread('GHI.tif');
+%[ghi_data, map] = imread('GHI.tif');
 %%
 
-figure (2);clf
-mapshow(GHI,R);
+%figure (2);clf
+%mapshow(GHI,R);
 
 %% Read in temp data from GISS data
 
@@ -57,3 +57,7 @@ c.Label.String = 'albedo in percent';
 plotm(coastlat, coastlon, 'Color','white','LineWidth',1);
 %geoshow('landareas.shp','FaceColor','black');
 title('Mean albedo between Nov 1986 and Jan 1987')
+
+%%
+%1D radiative transfer model
+
