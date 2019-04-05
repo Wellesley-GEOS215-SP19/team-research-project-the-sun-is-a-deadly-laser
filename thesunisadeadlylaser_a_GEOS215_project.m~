@@ -5,7 +5,7 @@
 %read in headers first
 rad_heads = readtable('RO_Column_Headers.csv')
 
-rad_filename = fullfile('Desktop','GEOS 215','GitHub','team-research-project-the-sun-is-a-deadly-laser','Global Radiation data',
+rad_filename = fullfile('Desktop','GEOS 215','GIT
 
 
 %% Read in temp data from GISS data
