@@ -13,6 +13,11 @@
 %figure (2);clf
 %mapshow(GHI,R);
 
+%% Read in global radiation data from MIDAS
+
+
+
+
 %% Read in temp data from GISS data
 
 GISS_temp = readtable('GISS_temp.csv');
