@@ -3,11 +3,14 @@
 
 %% Read in global radiation data from MIDAS
 %read in headers first
-rad_heads = readtable('RO_Column_Headers.csv')
+%rad_heads = readtable('RO_Column_Headers.csv')
+%rad_filename = fullfile('Desktop','GEOS 215','GitHub','team-research-project-the-sun-is-a-deadly-laser','Global Radiation data',
 
-rad_filename = fullfile('Desktop','GEOS 215','GitHub','team-research-project-the-sun-is-a-deadly-laser','Global Radiation data',
-
-
+obs_years = NaN*zeros(72,1); 
+linspace(1947,2019,1);
+for i=1:length(obs_years)
+    obs_years(i) = linspace(1947,2019,i);
+end
 %% Read in temp data from GISS data
 
 GISS_temp = readtable('GISS_temp.csv');
