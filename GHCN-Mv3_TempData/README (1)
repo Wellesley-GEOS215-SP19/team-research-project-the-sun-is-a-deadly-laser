@@ -1,0 +1,19 @@
+Last Updated: 09/29/2010
+
+The following directory:
+
+ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/v3/products/stnplots/
+
+is comprised of sub-directories (that are named by the first digit of a station
+ID) that contain individual station plot files (in "gif" format).
+
+The plot files contain 9 individual graphs, arranged in a 3x3 matrix.  The first
+column of graphs, contain 2-D colored symbol graphs of the actual monthly data
+for the entire period of record for A) the (Q)uality (C)ontrolled (U)nadjusted
+(QCU) data, B) the (Q)uality (C)ontrolled (A)djusted (QCA) data, and C) the
+differences between QCA and QCU monthly data.  The second column of graphs
+contain histograms of the monthly data for QCU, QCA, and (QCA-QCU) respectively.
+Finally, the third column of graphs depict annual anomalies and their associated
+trend line for QCU and QCA, and the differences in the annual anomalies for QCA
+and QCU. Detailed axis titles and units are displayed in the title of each
+graph.
