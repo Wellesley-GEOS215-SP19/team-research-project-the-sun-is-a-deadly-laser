@@ -39,6 +39,6 @@ contourfm(lat_alb, lon_alb_new, alb_mean','linecolor','none');
 cmocean('ice');
 c = colorbar('southoutside'); 
 c.Label.String = 'albedo in percent';
-plotm(coastlat, coastlon, 'Color','white','LineWidth',1);
+plotm(coastlat, coastlon, 'Color',[ 0.9100 0.4100 0.1700],'LineWidth',1);
 %geoshow('landareas.shp','FaceColor','black');
 title('Mean albedo between Nov 1986 and Jan 1987')
