@@ -74,11 +74,33 @@ end
 figure(1); clf
 worldmap world;
 geoshow('landareas.shp', 'FaceColor', 'black')
-scatterm(stations(:,2), stations(:,3), 10, MeanAnnualTemp(:,306), 'filled');
+scatterm(stations(:,2), stations(:,3), 10, MeanAnnualTemp(:,201), 'filled');
 cmocean('balance', 'pivot', 0);
 c = colorbar('southoutside');
 c.Label.String = 'Temperature Anomaly (??) [°C]';
+<<<<<<< HEAD:GHCNtemp.m
 title(' v3 Temperature Anomaly (??) in 2006');
+=======
+title('GHCN-M v3 Temperature Anomaly (??) in 1901');
+%%
+figure(2); clf
+worldmap world;
+geoshow('landareas.shp', 'FaceColor', 'black')
+scatterm(stations(:,2), stations(:,3), 10, MeanAnnualTemp(:,260), 'filled');
+cmocean('balance', 'pivot', 0);
+c = colorbar('southoutside');
+c.Label.String = 'Temperature Anomaly (??) [°C]';
+title('GHCN-M v3 Temperature Anomaly (??) in 1960');
+%%
+figure(3); clf
+worldmap world;
+geoshow('landareas.shp', 'FaceColor', 'black')
+scatterm(stations(:,2), stations(:,3), 10, MeanAnnualTemp(:,318), 'filled');
+cmocean('balance', 'pivot', 0);
+c = colorbar('southoutside');
+c.Label.String = 'Temperature Anomaly (??) [°C]';
+title('GHCN-M v3 Temperature Anomaly (??) in 2018');
+>>>>>>> 72dfbd78fd186b7c7449651588123bb8e351e1e7:GHCN-M_temp.m
 
 %Ok so some issues:
 % - The temperature data seem to like to hover around 0°C, even when I
