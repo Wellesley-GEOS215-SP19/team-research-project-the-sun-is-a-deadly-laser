@@ -1,4 +1,3 @@
-%% GHCN v3 Temperature
 %Import Raw Data:
 rawTempData = readtable('ghcnm.tavg.v3.3.0.20181219.qcu.dat.csv');
 
@@ -79,7 +78,7 @@ scatterm(stations(:,2), stations(:,3), 10, MeanAnnualTemp(:,306), 'filled');
 cmocean('balance', 'pivot', 0);
 c = colorbar('southoutside');
 c.Label.String = 'Temperature Anomaly (??) [°C]';
-title('GHCN-M v3 Temperature Anomaly (??) in 2006');
+title(' v3 Temperature Anomaly (??) in 2006');
 
 %Ok so some issues:
 % - The temperature data seem to like to hover around 0°C, even when I
