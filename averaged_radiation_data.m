@@ -5,7 +5,7 @@
 %%
 %load radiation_data.mat
 %avgd_rad_ttds = tabularTextDatastore('/Users/leafiasheradencox/Desktop/GEOS 215/GitHub/team-research-project-the-sun-is-a-deadly-laser/MIDAS Global Solar Data');
-avgd_rad_ttds = tabularTextDatastore('/Users/leafiasheradencox/Desktop/GEOS 215/GitHub/team-research-project-the-sun-is-a-deadly-laser/MIDAS Global Solar Data/midas_radtob_201801-201812.txt');
+avgd_rad_ttds = tabularTextDatastore('/Users/leafiasheradencox/Desktop/GEOS 215/GitHub/team-research-project-the-sun-is-a-deadly-laser/MIDAS Global Solar Data/midas_radtob_201001-201012.txt');
 avgd_rad_ttds.VariableNames = {'ID','ID_TYPE','OB_END_TIME','OB_HOUR_COUNT','VERSION_NUM','MET_DOMAIN_NAME','SRC_ID','REC_ST_IND','GLBL_IRAD_AMT','DIFU_IRAD_AMT','GLBL_IRAD_AMT_Q','DIFU_IRAD_AMT_Q','METO_STMP_TIME','MIDAS_STMP_ETIME','DIRECT_IRAD','IRAD_BAL_AMT','GLBL_S_LAT_IRAD_AMT','GLBL_HORZ_ILMN','YEAR','MONTH','LAT','LON'};%,DIRECT_IRAD_Q, IRAD_BAL_AMT_Q, GLBL_S_LAT_IRAD_AMT_Q, GLBL_HORZ_ILMN_Q 
 avgd_rad_ttds.TextscanFormats = {'%q','%q','%{uuuu-MM-dd HH:mm}D','%f','%f','%q','%f','%f','%f','%f','%f','%f','%f','%f','%f','%f','%q','%f','%f','%f','%f','%f'};
 avgd_rad_ttds.SelectedVariableNames = {'OB_END_TIME','SRC_ID','GLBL_IRAD_AMT','LAT','LON','MONTH','YEAR'};
@@ -55,7 +55,7 @@ month_rad_data = NaN*zeros(length(station_grid),length(month_grid)+3);
 for j=1:length(station_grid)
     for k=1:length(month_grid)
         stat_index = find(station_data(:,3)==station_grid(j));
-        if length(stat_index)>0
+        %if length(stat_index)>0
         month_rad_data(j,1)= station_data(stat_index,3); %src_id
         month_rad_data(j,2)= station_data(stat_index,2); %lat
         month_rad_data(j,3)= station_data(stat_index,1); %lon
@@ -63,7 +63,7 @@ for j=1:length(station_grid)
         stat_idx = find(avgd_radiation_data.SRC_ID == station_grid(j));
         joined_idx = intersect(mont_avg_idx,stat_idx);
         month_rad_data(j,k+3) = mean(avgd_radiation_data.GLBL_IRAD_AMT(joined_idx));
-        end
+        %end
     end
 end
 %%
@@ -77,19 +77,19 @@ plot(month_rad_data(1,4:end));
 figure(4); clf;
 imagesc(month_rad_data(:,4:end));
 %%
-figure(2); clf;
-worldmap 'United Kingdom'
-load coastlines;
-contourfm(month_rad_data(:,2),month_rad_data(:,3), mean_data.Jan,'linecolor','none');
-cmocean('ice');
-c = colorbar('southoutside'); 
-c.Label.String = 'kjoules/m^2';
-plotm(coastlat, coastlon, 'Color',[ 0.9100 0.4100 0.1700],'LineWidth',1);
+%figure(2); clf;
+%worldmap 'United Kingdom'
+%load coastlines;
+%contourf(month_rad_data(:,2),month_rad_data(:,3),month_rad_data(:,4),'linecolor','none');
+%cmocean('ice');
+%c = colorbar('southoutside'); 
+%c.Label.String = 'kjoules/m^2';
+%plotm(coastlat, coastlon, 'Color',[ 0.9100 0.4100 0.1700],'LineWidth',1);
 %geoshow('landareas.shp','FaceColor','black');
-title('Mean global solar irradiation amount Jan 1994')
+%title('Mean global solar irradiation amount Jan 1994')
 %%
 figure(1); clf
-worldmap('United Kingdom')
+worldmap('world')
 load coastlines
 plotm(coastlat,coastlon)
 plotm(mean_data.LAT,mean_data.LON, mean_data.Jan,'m.','markersize',15)
