@@ -2,10 +2,10 @@
 %Jocelyn and Leafia
 %%
 % Read the names of nc-files in the folder 
-ncfiles = dir('/Users/leafiasheradencox/Desktop/GEOS 215/GitHub/ORD32943/*.nc');
-
+ncfiles = dir('/Users/leafiasheradencox/Desktop/GEOS 215/GitHub/team-research-project-the-sun-is-a-deadly-laser/ORD32943/*.nc');
+%%
 finalfile=(ncfiles(408).name); %final data file is December 2015 data
-
+%%
 %ncdisp(finalfile);
 
 latfinal = ncread(finalfile,'lat');
@@ -53,14 +53,14 @@ title('April 2015 Surface Downwelling Shortwave Radiation')
 %%
 % Read the names of nc-files in the folder 
 % Loop for each nc-file
-data = NaN*zeros(1440,720,408)
+data = NaN*zeros(1440,720,408);
 for i=1:length(ncfiles)
     file = ncfiles(i).name;
     lat = ncread(file,'lat');
     lon = ncread(file,'lon');
     SIS = ncread(file,'SIS');
     SISCLS = ncread(file,'SISCLS');
-    data(:,:,i)=SISCLS
+    data(:,:,i)=SISCLS;
 end
 
 %for i = 1:Nfiles
