@@ -56,11 +56,20 @@ T_modeled = T_skin*2^(1/4);
 figure(1); clf
 worldmap world
 load coastlines;
-contourfm(lat_alb, lon_alb_new, T_modeled','linecolor','none');
+contourfm(lat_alb, lon_alb_new, T_modeled'-273.15,'linecolor','none');
 cmocean('thermal');
 c = colorbar('southoutside'); 
-c.Label.String = 'Temperature [K]';
+c.Label.String = 'Temperature [°C]';
 plotm(coastlat, coastlon, 'Color','black');
 title('Modeled Temperatures');
 
+% HadCRUT4
+figure(2); clf
+worldmap world
+contourfm(lat_abs, lon_abs, obs(:,:,2030)'-273.15, 'linecolor', 'none');
+cmocean('thermal');
+c = colorbar('southoutside');
+c.Label.String = 'Temperature [°C]';
+plotm(coastlat, coastlon, 'Color', 'black');
+title('Observed Temperatures');
 %% Compare w/T_observed
