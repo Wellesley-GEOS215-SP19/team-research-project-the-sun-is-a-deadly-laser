@@ -2,7 +2,9 @@
 %Jocelyn and Leafia
 %%
 % Read the names of nc-files in the folder 
-ncfiles = dir('/Users/leafiasheradencox/Desktop/GEOS 215/GitHub/team-research-project-the-sun-is-a-deadly-laser/ORD32943/*.nc');
+%ncfiles = dir('/Users/leafiasheradencox/Desktop/GEOS 215/GitHub/team-research-project-the-sun-is-a-deadly-laser/ORD32943/*.nc');
+ncfiles = dir('/Users/leafiasheradencox/Desktop/GEOS 215/GitHub/ORD32943/*.nc');
+
 %%
 %finalfile=(ncfiles(408).name); %final data file is December 2015 data
 
@@ -46,9 +48,9 @@ ncfiles = dir('/Users/leafiasheradencox/Desktop/GEOS 215/GitHub/team-research-pr
 % Loop for each nc-file
 
 months = {'January','February','March','April','May','June','July','August','September','October','November','December'};
-data = NaN*zeros(1440,720,12);
+data = NaN*zeros(1440,720,408);
     
-for i=396:408        
+for i=1:408        
             file = ncfiles(i).name;
             lat = ncread(file,'lat');
             lon = ncread(file,'lon');
@@ -56,12 +58,10 @@ for i=396:408
             SISCLS = ncread(file,'SISCLS');
             data(:,:,i)=SISCLS;
             SISCLS_data = data(:,:,i);
-            h = figure;
-            
+end       
+
             figure(i); clf;
             %hold on
-            %for j = 1:4; % NOTE: You CANNOT use 'j' for both the variable and the loop. Change one of them
-            %    subplot(3,4,j) % Creates a row of four plots per figure
             worldmap world
             load coastlines;
             contourfm(lat, lon, SISCLS_data','linecolor','none');
@@ -69,11 +69,9 @@ for i=396:408
             c = colorbar('southoutside'); 
             c.Label.String = '\it Surface Downwelling Shortwave Radiation [W/m^{2}]';
             plotm(coastlat, coastlon, 'Color','black','LineWidth',1);
-            saveas(h,sprintf('FIG%d.png',i)); % will create FIG1, FIG2,...
-            % title(sprintf('%s 2015 Surface Downwelling Shortwave Radiation',months{i}));
+            title('Surface Downwelling Shortwave Radiation');
 
-end
-%end
+    %end
 %end
 
 %for i = 1:Nfiles
