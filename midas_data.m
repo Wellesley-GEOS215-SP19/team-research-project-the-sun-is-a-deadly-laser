@@ -40,16 +40,16 @@ global_rad = NaN*zeros(length(stations(:,1)),length(stations(:,2)),length(month_
 %for each row in radiation_data, search through all of the rows in
 %stations to find the one that matches the one in the SRC_ID field of
 %radiation_data and append the lat and lon to that row of radiation_data
-%for i= 1:length(radiation_data.SRC_ID)
- %          stat_index = find(stations(i,1)==radiation_data.SRC_ID(i));
-  %         if stations(i,1)==radiation_data.SRC_ID(i); 
-   %            radiation_data.LAT(i)= stations(i,2);
-    %           radiation_data.LON(i) = stations(i,3);
-     %      else
-      %         %do nothing
-       %    end
-        %   %global_rad(lonindex,latindex,)=CO2data.PCO2_SW(i);
-%end%<--
+for i= 1:length(radiation_data.SRC_ID)
+           stat_index = find(station_data(:,3)==radiation_data.SRC_ID(i));
+           %if station_data(:,3)==radiation_data.SRC_ID(i); 
+           radiation_data.LAT(i)= station_data(stat_index,2);
+           radiation_data.LON(i) = station_data(stat_index,1);
+           %else
+               %do nothing
+           %end
+           %global_rad(lonindex,latindex,)=CO2data.PCO2_SW(i);
+end %<--
            %global_rad(,latindex,CO2data.MONTH(i))=CO2data.PCO2_SW(i);
            %SST(lonindex,latindex,CO2data.MONTH(i))=CO2data.SST(i);
            
@@ -71,3 +71,7 @@ global_rad = NaN*zeros(length(stations(:,1)),length(stations(:,2)),length(month_
 %similar to what we did in the CO2 lab and make a 3d array? I also need to 
 %average the months and then I guess the years?
 
+%monthly averages
+%save lat and lon addition until later
+%make a second .mat file to average each month for each station
+%constrained set of data
