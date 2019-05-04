@@ -65,7 +65,7 @@ title('Modeled Temperatures');
 
 % HadCRUT4
 figure(2); clf
-worldmap world
+worldmap world;
 contourfm(lat_abs, lon_abs, obs(:,:,2030)'-273.15, 'linecolor', 'none');
 cmocean('thermal');
 c = colorbar('southoutside');
@@ -75,19 +75,19 @@ title('Observed Temperatures');
 %% Compare w/T_observed
 for i = 1:length(lon_abs)
     if lon_abs(i) >= 0
-        lon_abs(i)= lon_abs(i)
+        lon_abs(i)= lon_abs(i);
     else
-        lon_abs(i) = lon_abs(i) + 360
+        lon_abs(i) = lon_abs(i) + 360;
     end
 end
 %%
-[lat_new,lon_new] = meshgrid(lat_abs, lon_abs)
+[lat_new,lon_new] = meshgrid(lat_abs, lon_abs);
 j = T_modeled(:);
 [lat_grid, lon_grid] = meshgrid(lat_alb, lon_alb_new);
 T_modeled_new = griddata(lat_grid(:), lon_grid(:), j, lat_new, lon_new);
 
 figure(3); clf
-worldmap world
+worldmap world;
 load coastlines;
 contourfm(lat_new, lon_new, T_modeled_new-273.15,'linecolor','none');
 cmocean('thermal');
@@ -97,7 +97,7 @@ plotm(coastlat, coastlon, 'Color','black');
 title('Modeled Temperatures - Restructured');
 
 figure(4); clf
-worldmap world
+worldmap world;
 load coastlines;
 contourfm(lat_new, lon_new, (T_modeled_new - obs(:,:,2030)),'linecolor','none');
 cmocean('balance', 'pivot', 0);
