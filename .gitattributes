@@ -11,3 +11,4 @@ GHCM_temp.m filter=lfs diff=lfs merge=lfs -text
 global_rad_data.m filter=lfs diff=lfs merge=lfs -text
 midas_station_data.m filter=lfs diff=lfs merge=lfs -text
 thesunisadeadlylaser_a_GEOS215_project.m filter=lfs diff=lfs merge=lfs -text
+*.pptx filter=lfs diff=lfs merge=lfs -text
