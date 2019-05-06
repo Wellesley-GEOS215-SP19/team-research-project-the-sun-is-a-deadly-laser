@@ -58,18 +58,34 @@ for i=1:408
             SISCLS = ncread(file,'SISCLS');
             data(:,:,i)=SISCLS;
             SISCLS_data = data(:,:,i);
-end       
+end     
+
 %%
-            figure(i); clf;
+mean_SIS = mean(data,3);
+
+%%
+
+figure(2); clf;
+worldmap world
+load coastlines;
+contourfm(lat, lon, mean_SIS', 'linecolor', 'none');
+cmocean('thermal');
+c=colorbar('southoutside');
+c.Label.String = '\it Surface Downwelling Shortwave Radiation [W/m^{2}]';
+plotm(coastlat, coastlon, 'Color','black','LineWidth',1);
+title('Surface Downwelling Shortwave Radiation');
+
+%%
+           % figure(i); clf;
             %hold on
-            worldmap world
-            load coastlines;
-            contourfm(lat, lon, SISCLS_data','linecolor','none');
-            cmocean('thermal');
-            c = colorbar('southoutside'); 
-            c.Label.String = '\it Surface Downwelling Shortwave Radiation [W/m^{2}]';
-            plotm(coastlat, coastlon, 'Color','black','LineWidth',1);
-            title('Surface Downwelling Shortwave Radiation');
+            %worldmap world
+            %load coastlines;
+            %contourfm(lat, lon, SISCLS_data','linecolor','none');
+            %cmocean('thermal');
+            %c = colorbar('southoutside'); 
+            %c.Label.String = '\it Surface Downwelling Shortwave Radiation [W/m^{2}]';
+            %plotm(coastlat, coastlon, 'Color','black','LineWidth',1);
+            %title('Surface Downwelling Shortwave Radiation');
 
     %end
 %end
