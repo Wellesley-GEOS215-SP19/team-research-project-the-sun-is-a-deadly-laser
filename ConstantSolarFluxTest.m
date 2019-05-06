@@ -39,6 +39,8 @@ end
 %1987)
 alb_mean = mean(alb,3);
 
+%% Read in Relevant Data and Set Constants: Solar Irradiance from CLARA
+
 %% Read in Relevant Data and Set Constants: Constants
 r_s = 695.508e6; %Radius of the Sun [m]; Brown and Christensen-Dalsgaard, 1998
 R_p = 149.597e9; %Earth-Sun Distance (1 Au) [m]; IAU, 2012

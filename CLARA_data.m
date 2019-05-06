@@ -2,16 +2,24 @@
 %Jocelyn and Leafia
 %%
 % Read the names of nc-files in the folder 
-ncfiles = dir('/Users/leafiasheradencox/Desktop/GEOS 215/GitHub/ORD32943/*.nc');
-
-finalfile=(ncfiles(408).name); %final data file is December 2015 data
-
-%ncdisp(finalfile);
-
-latfinal = ncread(finalfile,'lat');
-lonfinal= ncread(finalfile,'lon');
-SISfinal = ncread(finalfile,'SIS');
-SISCLSfinal = ncread(finalfile,'SISCLS'); %SISCLS is surface downwelling shortwave radiation assuming clear sky conditions
+ncfiles = dir('/Users/jocelynreahl/Documents/GitHub/team-research-project-the-sun-is-a-deadly-laser/ORD32943/*.nc');
+Oct2013 = ncfiles(length(ncfiles)-15).name;
+Nov2013 = ncfiles(length(ncfiles)-14).name;
+Dec2013 = ncfiles(length(ncfiles)-13).name;
+Feb2014 = ncfiles(length(ncfiles)-11).name;
+May2014 = ncfiles(length(ncfiles)-10).name;
+Jan2015 = ncfiles(length(ncfiles)-6).name;
+Mar2015 = ncfiles(length(ncfiles)-5).name;
+Apr2015 = ncfiles(length(ncfiles)-4).name;
+Jun2015 = ncfiles(length(ncfiles)-3).name;
+Jul2015 = ncfiles(length(ncfiles)-2).name;
+Aug2015 = ncfiles(length(ncfiles)-1).name;
+Sep2015 = ncfiles(length(ncfiles)).name;
+%%
+latfinal = ncread(num2str(finalfile),'lat');
+lonfinal= ncread(num2str(finalfile),'lon');
+SISfinal = ncread(num2str(finalfile),'SIS');
+SISCLSfinal = ncread(num2str(finalfile),'SISCLS'); %SISCLS is surface downwelling shortwave radiation assuming clear sky conditions
 %SISCLS is in Watts/square meters
 
 %imagesc(SISCLS(:,:)');
@@ -24,7 +32,7 @@ cmocean('thermal');
 c = colorbar('southoutside'); 
 c.Label.String = '\it Surface Downwelling Shortwave Radiation [W/m^{2}]';
 plotm(coastlat, coastlon, 'Color','white','LineWidth',1);
-title('December 2015 Surface Downwelling Shortwave Radiation')
+title('September 2015 Surface Downwelling Shortwave Radiation')
 
 %%
 file400=(ncfiles(400).name); %final data file is April 2015 data
