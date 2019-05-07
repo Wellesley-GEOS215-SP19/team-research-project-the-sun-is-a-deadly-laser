@@ -14,6 +14,16 @@ meanabs = mean(absolute, 3);
 
 %add the anomalies to the mean to get the observed temperatures
 obs = meanabs + anomaly;
+
+figure(1); clf
+worldmap world
+load coastlines;
+contourfm(lat_ano, lon_ano, anomaly(:,:,2030)','linecolor','none');
+cmocean('balance', 'pivot', 0);
+c = colorbar('southoutside'); 
+c.Label.String = 'Temperature Anomaly [°C]';
+plotm(coastlat, coastlon, 'Color','black');
+title('HadCRUT4 Present-Day Temperature Anomaly');
 %% Read in Relevant Data and Set Constants: ERBE Albedo
 lon_alb = double(ncread('albedo.nc','X'));
 lat_alb = double(ncread('albedo.nc','Y'));
