@@ -149,24 +149,24 @@ title('Modeled Temperatures');
 % HadCRUT4
 figure(2); clf
 worldmap world;
-contourfm(lat_abs, lon_abs, obs(:,:,2030)'-273.15, 'linecolor', 'none');
+contourfm(lat_ano, lon_ano, (obs(:,:,2030)-273.15)', 'linecolor', 'none');
 cmocean('thermal');
 c = colorbar('southoutside');
 c.Label.String = 'Temperature [°C]';
 plotm(coastlat, coastlon, 'Color', 'black');
 title('Observed Temperatures');
 %% Compare w/T_observed
-for i = 1:length(lon_abs)
-    if lon_abs(i) >= 0
-        lon_abs(i)= lon_abs(i);
+for i = 1:length(lon_ano)
+    if lon_ano(i) >= 0
+        lon_ano(i)= lon_ano(i);
     else
-        lon_abs(i) = lon_abs(i) + 360;
+        lon_ano(i) = lon_ano(i) + 360;
     end
 end
 %% Restructure data to work with each other (i.e. a 5°x5° grid)
 % Restructure Constant-Solar irradiance T modeled (T_modeled) to work with
 % HadCRUT4 dataset
-[lat_new,lon_new] = meshgrid(lat_abs, lon_abs); % New size of data 
+[lat_new,lon_new] = meshgrid(lat_ano, lon_ano); % New size of data 
                                                 % (modeled off of the sizing for HadCRUT4)
                                                 
 [lat_grid, lon_grid] = meshgrid(lat_alb, lon_alb_new); % Old size of data
@@ -177,7 +177,7 @@ T_modeled_new = griddata(lat_grid(:), lon_grid(:), T_modeled(:), lat_new, lon_ne
 Restruct_Alb = griddata(lat_AlbOld(:), lon_AlbOld(:), alb_mean(:), lat_new, lon_new);
 
 %Restructure July CLARA-A2 data
-[lat_CLARAOld, lon_CLARAOld] = meshgrid(latJul, lonJul);%It's the same for all CLARA data
+[lat_CLARAOld, lon_CLARAOld] = meshgrid(fliplr(latJul), lonJul);%It's the same for all CLARA data
 Restruct_Jul = griddata(lat_CLARAOld(:), lon_CLARAOld(:), SISCLSJul(:), lat_new, lon_new);
 
 %Restructure October CLARA-A2 data
@@ -195,6 +195,10 @@ T_SLGCMOct = (2^(1/4)).*(((1-(Restruct_Alb/100)).*Restruct_Oct)/sigma).^(1/4);
 T_SLGCMJan = (2^(1/4)).*(((1-(Restruct_Alb/100)).*Restruct_Jan)/sigma).^(1/4);
 T_SLGCMApr = (2^(1/4)).*(((1-(Restruct_Alb/100)).*Restruct_Apr)/sigma).^(1/4);
 
+DiffJul = T_SLGCMJul - obs(:,:,2030);
+DiffOct = T_SLGCMOct - obs(:,:,2030);
+DiffJan = T_SLGCMJan - obs(:,:,2030);
+DiffApr = T_SLGCMApr - obs(:,:,2030);
 figure(3); clf
 worldmap world;
 load coastlines;
@@ -238,7 +242,7 @@ title('Modeled Temperatures - April');
 figure(7); clf
 worldmap world;
 load coastlines;
-contourfm(lat_new, lon_new, (T_SLGCMJul-obs(:,:,2030)),'linecolor','none');
+contourfm(lat_new, lon_new, (DiffJul),'linecolor','none');
 cmocean('balance', 'pivot', 0);
 c = colorbar('southoutside'); 
 c.Label.String = '?T [°C]';
@@ -248,7 +252,7 @@ title('\fontsize{16}?T - July');
 figure(8); clf
 worldmap world;
 load coastlines;
-contourfm(lat_new, lon_new, (T_SLGCMOct-obs(:,:,2030)),'linecolor','none');
+contourfm(lat_new, lon_new, (DiffOct),'linecolor','none');
 cmocean('balance', 'pivot', 0);
 c = colorbar('southoutside'); 
 c.Label.String = '?T [°C]';
@@ -258,7 +262,7 @@ title('\fontsize{16}?T - October');
 figure(9); clf
 worldmap world;
 load coastlines;
-contourfm(lat_new, lon_new, (T_SLGCMJan-obs(:,:,2030)),'linecolor','none');
+contourfm(lat_new, lon_new, (DiffJan),'linecolor','none');
 cmocean('balance', 'pivot', 0);
 c = colorbar('southoutside'); 
 c.Label.String = '?T [°C]';
@@ -268,7 +272,7 @@ title('\fontsize{16}?T - January');
 figure(10); clf
 worldmap world;
 load coastlines;
-p = contourfm(lat_new, lon_new, (T_SLGCMApr-obs(:,:,2030)),'linecolor','none');
+p = contourfm(lat_new, lon_new, (DiffApr),'linecolor','none');
 cmocean('balance', 'pivot', 0);
 c = colorbar('southoutside'); 
 c.Label.String = '?T [°C]';
