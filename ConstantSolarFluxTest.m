@@ -65,8 +65,8 @@ Jul2015 = ncfiles(length(ncfiles)-2).name;
 Aug2015 = ncfiles(length(ncfiles)-1).name;
 %Sep2015 = ncfiles(length(ncfiles)).name;
 
-% Define a pretty new function to convert longitudes to 0-360 instead of
-% -180 to +180:
+%DEFINE LAT, LON, AND RELEVANT DATA FOR JULY, OCTOBER, JANUARY, AND APRIL
+%(REPRESENTING THE EQUINOXES AND SOLSTICES.
 
 % July 2015 (Northern Hemisphere Summer) Solar Irradiation
 latJul = ncread(Jul2015,'lat');
@@ -135,7 +135,7 @@ q_in = (q_s_prime*(1-(alb_mean/100)))/4;
 T_skin = (((q_s_prime*(1-(alb_mean/100)))/(4*sigma))).^(1/4);
 T_modeled = T_skin*2^(1/4);
 
-%% Plot T_modeled
+%% Plot T_modeled - This assumes a constant solar irradiation, computed using the constants above
 figure(1); clf
 worldmap world
 load coastlines;
@@ -146,11 +146,11 @@ c.Label.String = 'Temperature [°C]';
 plotm(coastlat, coastlon, 'Color','black');
 title('Modeled Temperatures');
 
-% HadCRUT4
+% HadCRUT4 Observed Temperatures
 figure(2); clf
 worldmap world;
 contourfm(lat_ano, lon_ano, (obs(:,:,2030)-273.15)', 'linecolor', 'none');
-cmocean('thermal');
+cmocean('balance', 'pivot', 0);
 c = colorbar('southoutside');
 c.Label.String = 'Temperature [°C]';
 plotm(coastlat, coastlon, 'Color', 'black');
@@ -177,7 +177,7 @@ T_modeled_new = griddata(lat_grid(:), lon_grid(:), T_modeled(:), lat_new, lon_ne
 Restruct_Alb = griddata(lat_AlbOld(:), lon_AlbOld(:), alb_mean(:), lat_new, lon_new);
 
 %Restructure July CLARA-A2 data
-[lat_CLARAOld, lon_CLARAOld] = meshgrid(fliplr(latJul), lonJul);%It's the same for all CLARA data
+[lat_CLARAOld, lon_CLARAOld] = meshgrid(latJul, lonJul);%It's the same for all CLARA data
 Restruct_Jul = griddata(lat_CLARAOld(:), lon_CLARAOld(:), SISCLSJul(:), lat_new, lon_new);
 
 %Restructure October CLARA-A2 data
@@ -190,55 +190,67 @@ Restruct_Jan = griddata(lat_CLARAOld(:), lon_CLARAOld(:), SISCLSJan(:), lat_new,
 Restruct_Apr = griddata(lat_CLARAOld(:), lon_CLARAOld(:), SISCLSApr(:), lat_new, lon_new);
 
 %% Calculate T_SLGCM from CLARA and ERBE datasets
+%Calculate the Modeled Temperatures using the CLARA-A2 and ERBE Datasets
+%for each month (July, October, January, and April)
 T_SLGCMJul = (2^(1/4)).*(((1-(Restruct_Alb/100)).*Restruct_Jul)/sigma).^(1/4);
 T_SLGCMOct = (2^(1/4)).*(((1-(Restruct_Alb/100)).*Restruct_Oct)/sigma).^(1/4);
 T_SLGCMJan = (2^(1/4)).*(((1-(Restruct_Alb/100)).*Restruct_Jan)/sigma).^(1/4);
 T_SLGCMApr = (2^(1/4)).*(((1-(Restruct_Alb/100)).*Restruct_Apr)/sigma).^(1/4);
 
+%Calculate the difference (Delta T) between the SLGCM modeled temperatures
+%and the observed HadCRUT4 temperatures
 DiffJul = T_SLGCMJul - obs(:,:,2030);
 DiffOct = T_SLGCMOct - obs(:,:,2030);
 DiffJan = T_SLGCMJan - obs(:,:,2030);
 DiffApr = T_SLGCMApr - obs(:,:,2030);
+
+%% Plot the Modeled SLGCM Temperatures!
+
+%SLGCM Modeled Temperature July
 figure(3); clf
 worldmap world;
 load coastlines;
 contourfm(lat_new, lon_new, T_SLGCMJul-273.15,'linecolor','none');
-cmocean('thermal');
+cmocean('balance', 'pivot', 0);
 c = colorbar('southoutside'); 
 c.Label.String = 'Temperature [°C]';
 plotm(coastlat, coastlon, 'Color','black');
 title('Modeled Temperatures - July');
 
+%SLGCM Modeled Temperature October
 figure(4); clf
 worldmap world;
 load coastlines;
 contourfm(lat_new, lon_new, T_SLGCMOct-273.15,'linecolor','none');
-cmocean('thermal');
+cmocean('balance', 'pivot', 0);
 c = colorbar('southoutside'); 
 c.Label.String = 'Temperature [°C]';
 plotm(coastlat, coastlon, 'Color','black');
 title('Modeled Temperatures - October');
 
+%SLGCM Modeled Temperature January
 figure(5); clf
 worldmap world;
 load coastlines;
 contourfm(lat_new, lon_new, T_SLGCMJan-273.15,'linecolor','none');
-cmocean('thermal');
+cmocean('balance', 'pivot', 0);
 c = colorbar('southoutside'); 
 c.Label.String = 'Temperature [°C]';
 plotm(coastlat, coastlon, 'Color','black');
 title('Modeled Temperatures - January');
 
+%SLGCM Modeled Temperature April
 figure(6); clf
 worldmap world;
 load coastlines;
 contourfm(lat_new, lon_new, T_SLGCMApr-273.15,'linecolor','none');
-cmocean('thermal');
+cmocean('balance', 'pivot', 0);
 c = colorbar('southoutside'); 
 c.Label.String = 'Temperature [°C]';
 plotm(coastlat, coastlon, 'Color','black');
 title('Modeled Temperatures - April');
-%% Create comparisons with HadCRUT4 and plot!
+%% Plot the Delta T between SLGCM Modeled Temperatures and Observed HadCRUT4 temperatures
+%Delta T July
 figure(7); clf
 worldmap world;
 load coastlines;
@@ -249,6 +261,7 @@ c.Label.String = '?T [°C]';
 plotm(coastlat, coastlon, 'Color','black');
 title('\fontsize{16}?T - July');
 
+%Delta T October
 figure(8); clf
 worldmap world;
 load coastlines;
@@ -259,6 +272,7 @@ c.Label.String = '?T [°C]';
 plotm(coastlat, coastlon, 'Color','black');
 title('\fontsize{16}?T - October');
 
+%Delta T January
 figure(9); clf
 worldmap world;
 load coastlines;
@@ -269,6 +283,7 @@ c.Label.String = '?T [°C]';
 plotm(coastlat, coastlon, 'Color','black');
 title('\fontsize{16}?T - January');
 
+%Delta T April
 figure(10); clf
 worldmap world;
 load coastlines;
@@ -278,7 +293,8 @@ c = colorbar('southoutside');
 c.Label.String = '?T [°C]';
 plotm(coastlat, coastlon, 'Color','black');
 title('\fontsize{16}?T - April');
-%%
+%% Extra Figures
+% Restructured Modeled Temperatures assuming constant solar irradiation
 figure(11); clf
 worldmap world;
 load coastlines;
@@ -289,6 +305,8 @@ c.Label.String = 'Temperature [°C]';
 plotm(coastlat, coastlon, 'Color','black');
 title('Modeled Temperatures - Restructured');
 
+%Difference between Observed HadCRUT4 Temperatures and Restructured Modeled
+%Temperatures assuming constant solar irradiation
 figure(12); clf
 worldmap world;
 load coastlines;
@@ -298,3 +316,14 @@ c = colorbar('southoutside');
 c.Label.String = 'Temperature Difference [°C]';
 plotm(coastlat, coastlon, 'Color','black');
 title('Difference between Modeled Temperatures and Observed HadCRUT4 Temperatures');
+
+%HadCRUT4 Mean Temperatures between 1961 and 1990
+figure(13); clf
+worldmap world;
+load coastlines;
+contourfm(lat_abs, lon_abs, (meanabs-273.15)','linecolor','none');
+cmocean('balance', 'pivot', 0);
+c = colorbar('southoutside'); 
+c.Label.String = 'Temperature [°C]';
+plotm(coastlat, coastlon, 'Color','black');
+title('Mean Temperature from 1961 to 1990');
